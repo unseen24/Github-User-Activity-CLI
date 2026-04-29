@@ -25,7 +25,6 @@ def main():
         username = args.username
         user_data = get_user_activity(username)
 
-    print(f'{user_data}')
 
 #iterate user_data(list) values
     for event in user_data:
@@ -34,6 +33,6 @@ def main():
             print(f'{username} Created a branch at {event["repo"]["name"]}')
 
         elif event['type'] == 'PushEvent':
-            print(f'{username} Pushed to {event["payload"]} at {event["repo"]["name"]}')
+            print(f'{username} Pushed to {event["payload"]["ref"].removeprefix("refs/heads/")} at {event["repo"]["name"].split("/")[1]}')
 if __name__ == "__main__":
     main()
