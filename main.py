@@ -33,6 +33,6 @@ def main():
             print(f'{username} Created a branch at {event["repo"]["name"]}')
 
         elif event['type'] == 'PushEvent':
-            print(f'{username} Pushed to {event["payload"]["ref"].removeprefix("refs/heads/")} at {event["repo"]["name"].split("/")[1]}')
+            print(f'{username} Pushed {event["commits"].length} to {event["payload"]["ref"].removeprefix("refs/heads/")} at {event["repo"]["name"].split("/")[1]}')
 if __name__ == "__main__":
     main()
