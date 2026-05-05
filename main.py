@@ -30,9 +30,23 @@ def main():
     for event in user_data:
         #get specific value (type) and check if its a CreateEvent
         if event['type'] == 'CreateEvent':
-            print(f'{username} Created a branch at {event["repo"]["name"]}')
+            print(f'{username} Created a {event["payload"]["ref_type"]} at {event["repo"]["name"].split("/")[1]}')
 
         elif event['type'] == 'PushEvent':
-            print(f'{username} Pushed {event["commits"].length} to {event["payload"]["ref"].removeprefix("refs/heads/")} at {event["repo"]["name"].split("/")[1]}')
+            print(f'{username} Pushed to {event["payload"]["ref"].removeprefix("refs/heads/")} at {event["repo"]["name"].split("/")[1]}')
+
+        #Delete
+        elif event['type'] == 'DeleteEvent':
+            print(f'{username} Deleted a {event['payload']['ref_type']} at {event["repo"]["name"].split("/")[1]}')
+        #Fork
+        elif event['type'] == 'ForkEvent':
+            print(f'{username} {event['payload']['action']} {event["repo"]["name"].split("/")[1]}')
+        #Watch
+        elif event['type'] == 'WatchEvent':
+            print(f'{username} Starred {event["repo"]["name"].split("/")[1]}')
+        #Issues
+        elif event['type'] == 'IssuesEvent':
+            print(f'{username} {event['payload']['action'].capitalize()} issue # {event['payload']['number']} {event['payload']['title']} at {event["repo"]["name"].split("/")[1]}')
+
 if __name__ == "__main__":
     main()
